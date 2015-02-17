@@ -44,6 +44,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "rack-test", require: "rack/test"
   gem 'cucumber-rails', :require => false
   # database_cleaner is not required, but highly recommended
   gem 'database_cleaner'
