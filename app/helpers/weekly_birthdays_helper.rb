@@ -1,0 +1,2 @@
+module WeeklyBirthdaysHelper
+end
