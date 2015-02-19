@@ -9,24 +9,31 @@ class WeeklyBirthdaysController < ApplicationController
 
     @people = []
     for person in retrieved_people
-      @people.push(build_extended_person(person)) if is_birthday_in_calendar_week(person.birthdate)
+      @people.push(build_formatted_person(person)) if is_birthday_in_calendar_week(person.birthdate)
     end
+
+    @people.sort!{ |a, b| a[:birthday_day_of_week_index] <=> b[:birthday_day_of_week_index] }
   end
 
   private
-    def build_extended_person(person)
+    def build_formatted_person(person)
+      birthday_day_of_week_index = get_birthday_day_of_week_index(person.birthdate)
       {
         first_name: person.first_name,
         last_name: person.last_name,
         birthdate: person.birthdate,
-        birthday_day_of_week: get_birthday_day_of_week(person.birthdate),
-        age: get_age(person.birthdate)
+        birthday_day_of_week: get_birthday_day_of_week(birthday_day_of_week_index),
+        birthday_day_of_week_index: birthday_day_of_week_index,
+        age: get_age(person.birthdate),
       }
     end
 
-    def get_birthday_day_of_week(birthdate)
-      birthday_this_year = Date.new(@date.year, birthdate.month, birthdate.day)
-      Date::DAYNAMES[birthday_this_year.wday]
+    def get_birthday_day_of_week(birthday_day_of_week_index)
+      Date::DAYNAMES[birthday_day_of_week_index]
+    end
+
+    def get_birthday_day_of_week_index(birthdate)
+      Date.new(@date.year, birthdate.month, birthdate.day).wday
     end
 
     def get_age(birthdate)
