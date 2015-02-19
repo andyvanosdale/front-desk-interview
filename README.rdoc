@@ -1,28 +1,21 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This rails app contains an API to get a list of people whose birthdays are within the current week.
 
-Things you may want to cover:
+=== Routes
+==== GET /getWeeklyBirthdays
+Gets a list of birthdays within the current week including the day of the week and age.
 
-* Ruby version
+=====Parameters
+date - An override for the current date
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+=== Tests
+Tests are available for the API using Cucumber and the Given-When-Then scenarios. The tests can be found in the 'features' directory. To run the tests, execute 'rake cucumber'.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+TODOs:
+* Localize day name strings
+* Order the birthdays by day of the week
+* Handle leap year correctly
+* Handle ISO vs US week standards
+* Metrics

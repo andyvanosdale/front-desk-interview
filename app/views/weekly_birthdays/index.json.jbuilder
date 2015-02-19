@@ -1,1 +1,1 @@
-json.array!
+json.array! @people, :first_name, :last_name, :birthdate, :age, :birthday_day_of_week
