@@ -10,8 +10,4 @@ Gets a list of birthdays within the current week including the day of the week a
 date - An override for the current date
 
 === Tests
-Tests are available for the API using Cucumber and the Given-When-Then scenarios. The tests can be found in the 'features' directory. To run the tests, execute 'rake cucumber'.
-
-=== TODOs
-* Handle ISO vs US week standards
-* Metrics
+Tests are available for the API using Cucumber and Given-When-Then scenarios. The tests can be found in the 'features' directory. To run the tests, execute 'rake cucumber'.

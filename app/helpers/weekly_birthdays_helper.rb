@@ -1,3 +1,4 @@
+# Helper methods for weekly birthday views
 module WeeklyBirthdaysHelper
   @@DAYNAMES = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
 

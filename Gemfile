@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Fish out the accept language HTTP header
 gem 'http_accept_language'
 
+# Gather some code quality metrics
+gem 'metric_fu'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -1,3 +1,4 @@
+# Handles weekly birthdays for a collection of people
 class WeeklyBirthdaysController < ApplicationController
   # index
   #   Retrieves a list of people whose birthdays fall within the current calendar week
@@ -11,12 +12,16 @@ class WeeklyBirthdaysController < ApplicationController
     retrieved_people = Person.all
 
     @people = []
-    retrieved_people.each do |person|
-      person.current_date = current_date
-      @people.push(person) if person.is_birthdate_in_calendar_week
+    ActiveSupport::Notifications.instrument "people.filter" do
+      retrieved_people.each do |person|
+        person.current_date = current_date
+        @people.push(person) if person.is_birthdate_in_calendar_week
+      end
     end
 
-    @people.sort!{ |a, b| a.current_birthdate_wday <=> b.current_birthdate_wday }
+    ActiveSupport::Notifications.instrument "people.sort" do
+      @people.sort!{ |left, right| left.current_birthdate_wday <=> right.current_birthdate_wday }
+    end
   end
 
   private
