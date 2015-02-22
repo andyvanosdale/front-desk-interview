@@ -15,6 +15,5 @@ Tests are available for the API using Cucumber and the Given-When-Then scenarios
 
 TODOs:
 * Localize day name strings
-* Handle leap year correctly
 * Handle ISO vs US week standards
 * Metrics

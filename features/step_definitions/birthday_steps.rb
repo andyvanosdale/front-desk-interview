@@ -28,17 +28,24 @@ World(BirthdayStepsHelper)
 Given(/^there are no people$/) do
 end
 
-Given(/^there is a person with a birthday on (\d+)\-(\d+)\-(\d+)$/) do |year, month, day|
-  date = Date.new(year.to_i, month.to_i, day.to_i)
-  create(:person, birthdate: date)
+Given(/^there is a person (.*?) with a birthday on (.*?)$/) do |name, birthdate|
+  date = Date.parse(birthdate)
+  create(:person, first_name: name, birthdate: date)
+end
+
+Given(/^there are the following people:$/) do |table|
+  table.hashes.map do |row|
+    date = Date.parse(row["Birthdate"])
+    create(:person, first_name: row["Name"], birthdate: date)
+  end
 end
 
 When(/^I get weekly birthdays$/) do
   get '/getWeeklyBirthdays', format: :json
 end
 
-When(/^I get weekly birthdays on (\d+)\-(\d+)\-(\d+)$/) do |year, month, day|
-  date = Date.new(year.to_i, month.to_i, day.to_i)
+When(/^I get weekly birthdays on (.*?)$/) do |birthdate|
+  date = Date.parse(birthdate)
   get '/getWeeklyBirthdays', date: date, format: :json
 end
 
@@ -53,4 +60,12 @@ end
 
 Then(/^the (\d+)(?:st|nd|rd|th) person's age should be (\d+)$/) do |index, age|
   check_age(index.to_i, age.to_i)
+end
+
+Then(/^there should be the following people with birthdays that week:$/) do |table|
+  table.hashes.map do |row|
+    order = row["Order"].to_i
+    check_birthday_day_of_week(order, row["Day"])
+    check_age(order, row["Age"].to_i)
+  end
 end
