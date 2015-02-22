@@ -15,12 +15,20 @@ module BirthdayStepsHelper
     assert_equal count, @json.count
   end
 
+  def get_row(index)
+    @json[index-1]
+  end
+
   def check_birthday_day_of_week(index, day_of_week)
-    assert_equal day_of_week, @json[index-1]['birthday_day_of_week']
+    assert_equal day_of_week, get_row(index)['birthday_day_of_week']
   end
 
   def check_age(index, age)
-    assert_equal age, @json[index-1]['age']
+    assert_equal age, get_row(index)['age']
+  end
+
+  def check_name(index, name)
+    assert_equal name, get_row(index)['first_name']
   end
 end
 World(BirthdayStepsHelper)
@@ -49,6 +57,12 @@ When(/^I get weekly birthdays on (.*?)$/) do |birthdate|
   get '/getWeeklyBirthdays', date: date, format: :json
 end
 
+When(/^I get weekly birthdays in the (.*?) language on (.*?)$/) do |language, birthdate|
+  date = Date.parse(birthdate)
+  header 'Accept-Language', language
+  get '/getWeeklyBirthdays', date: date, format: :json
+end
+
 Then(/^there should be (\d+) birthdays*$/) do |count|
   response_basic_checks
   response_count(count.to_i)
@@ -65,6 +79,7 @@ end
 Then(/^there should be the following people with birthdays that week:$/) do |table|
   table.hashes.map do |row|
     order = row["Order"].to_i
+    check_name(order, row["Name"])
     check_birthday_day_of_week(order, row["Day"])
     check_age(order, row["Age"].to_i)
   end

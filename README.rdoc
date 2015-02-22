@@ -12,8 +12,6 @@ date - An override for the current date
 === Tests
 Tests are available for the API using Cucumber and the Given-When-Then scenarios. The tests can be found in the 'features' directory. To run the tests, execute 'rake cucumber'.
 
-
-TODOs:
-* Localize day name strings
+=== TODOs
 * Handle ISO vs US week standards
 * Metrics

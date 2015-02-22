@@ -53,17 +53,23 @@ Feature: Get Weekly Birthdays
     Given there are the following people:
       | Name | Birthdate  |
       | Bob  | 1984-02-18 |
+      | Dave | 1986-02-21 |
       | Mary | 1983-02-16 |
+      | Sue  | 1987-02-20 |
+      | Gary | 1985-02-22 |
       | Jane | 1982-02-19 |
       | Jack | 1981-02-17 |
     When I get weekly birthdays on 2015-02-16
-    Then there should be 4 birthdays
+    Then there should be 7 birthdays
     And there should be the following people with birthdays that week:
       | Order | Name | Day       | Age |
-      | 1     | Mary | Monday    | 32  |
-      | 2     | Jack | Tuesday   | 34  |
-      | 3     | Bob  | Wednesday | 31  |
-      | 4     | Jane | Thursday  | 33  |
+      | 1     | Gary | Sunday    | 30  |
+      | 2     | Mary | Monday    | 32  |
+      | 3     | Jack | Tuesday   | 34  |
+      | 4     | Bob  | Wednesday | 31  |
+      | 5     | Jane | Thursday  | 33  |
+      | 6     | Sue  | Friday    | 28  |
+      | 7     | Dave | Saturday  | 29  |
 
   Scenario: A February 29 leap year birthdate defaults to March 1 on non-leap year
     Given there are the following people:
@@ -84,3 +90,25 @@ Feature: Get Weekly Birthdays
     And there should be the following people with birthdays that week:
       | Order | Name | Day    | Age |
       | 1     | Bob  | Monday | 4   |
+
+  Scenario: Birthdays are ordered by day of week in Spanish
+    Given there are the following people:
+      | Name | Birthdate  |
+      | Bob  | 1984-02-18 |
+      | Dave | 1986-02-21 |
+      | Mary | 1983-02-16 |
+      | Sue  | 1987-02-20 |
+      | Gary | 1985-02-22 |
+      | Jane | 1982-02-19 |
+      | Jack | 1981-02-17 |
+    When I get weekly birthdays in the es-ES language on 2015-02-16
+    Then there should be 7 birthdays
+    And there should be the following people with birthdays that week:
+      | Order | Name | Day       | Age |
+      | 1     | Gary | domingo   | 30  |
+      | 2     | Mary | lunes     | 32  |
+      | 3     | Jack | martes    | 34  |
+      | 4     | Bob  | miércoles | 31  |
+      | 5     | Jane | jueves    | 33  |
+      | 6     | Sue  | viernes   | 28  |
+      | 7     | Dave | sábado    | 29  |
